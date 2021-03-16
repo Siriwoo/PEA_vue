@@ -1,0 +1,20 @@
+{
+  "name": "pea-flow",
+  "short_name": "pea-flow",
+  "icons": [
+    {
+      "src": "./aa.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./aa.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#fff"
+}
