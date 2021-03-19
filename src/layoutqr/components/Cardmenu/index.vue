@@ -16,6 +16,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { getUserData, setUserActivity, getUserActivity } from '@/utils/auth'
 import store from '@/store'
 import router from '@/router'

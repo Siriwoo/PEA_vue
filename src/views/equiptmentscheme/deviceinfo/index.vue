@@ -268,7 +268,10 @@
     }
   }
 </style>
+
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import DataTable from "@/views/components/DataTable";
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
 import waves from '@/directive/waves' // waves directive

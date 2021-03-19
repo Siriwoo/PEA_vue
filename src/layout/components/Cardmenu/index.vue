@@ -12,14 +12,17 @@
     </div>
   </div>
 
-
 </template>
 
 <script>
 import { getUserData, setUserActivity, getUserActivity } from '@/utils/auth'
 import store from '@/store'
 import router from '@/router'
+
 export default {
+  // eslint-disable-next-line
+  /* eslint-disable */
+
   name: 'Cardmenu',
   data(){
     return {
@@ -54,13 +57,24 @@ export default {
         if(useac2.scheme=="stockecar"){
           console.log('useac2.scheme=="stockecar"');
           this.$router.push({ path: '/mainqrcode'})
-        }else if(useac2.scheme=="devices"){
+        }
+        else if(useac2.scheme=="devices"){
           this.$router.push({ path: '/maindevices'})
-        }else if(useac2.scheme=="meetingbooking"){
-          this.$router.push({ path: '/meetingbooking'})
-        }else if(useac2.scheme=="stockexcavation"){
-          this.$router.push({ path: '/stockexcavation'})
-        }else{
+        }
+        else if(useac2.scheme=="meetingbooking"){
+          this.$router.push({ path: '/meetingbooking'})  //path จองห้องประชุม
+        }
+        else if(useac2.scheme=="stockexcavation"){
+          this.$router.push({ path: '/stockexcavation'})   //path หุ้น
+        }
+        else if(useac2.scheme=="assets_management"){
+          this.$router.push({ path: '/assets_management'})  //path สินทรัพย์
+        }
+        else if(useac2.scheme=="fillforms"){
+          this.$router.push({ path: '/fillforms'})  //path แบบฟอร์ม
+        }
+
+        else{
           this.$router.push({ path: '/dashboard'})
         }
 

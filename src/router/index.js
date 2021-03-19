@@ -6,6 +6,8 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
+// eslint-disable-next-line
+/* eslint-disable */
 /* Router Modules */
 import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
@@ -23,6 +25,7 @@ import pickscheme from './menuscheme/pickscheme'
 import fillforms from './menuscheme/fillforms'
 import meetingbooking from './menuscheme/meetingbooking'
 import stockexcavation from './menuscheme/stockexcavation'
+import assets_management from './menuscheme/assets_management' //import router สินทรัพย์
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -50,58 +53,60 @@ import stockexcavation from './menuscheme/stockexcavation'
  * all roles can be accessed
  */
 
-export const constantRoutes = [
-  {
-    path: '/redirect',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
-  },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/pickscheme',
-    name: 'pickscheme',
-    component: () => import('@/views/pickscheme/index'),
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    hidden: true
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/error-page/404'),
-    hidden: true
-  },
-  {
-    path: '/401',
-    component: () => import('@/views/error-page/401'),
-    hidden: true
-  },
-  {
-    path: '/profile',
-    component: Layout,
-    redirect: '/profile/index',
-    hidden: true,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/profile/index'),
-        name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
-      }
-    ]
-  }
+export const constantRoutes = [{
+        path: '/redirect',
+        component: Layout,
+        hidden: true,
+        children: [{
+            path: '/redirect/:path*',
+            component: () =>
+                import ('@/views/redirect/index')
+        }]
+    },
+    {
+        path: '/login',
+        component: () =>
+            import ('@/views/login/index'),
+        hidden: true
+    },
+    {
+        path: '/pickscheme',
+        name: 'pickscheme',
+        component: () =>
+            import ('@/views/pickscheme/index'),
+        hidden: true
+    },
+    {
+        path: '/auth-redirect',
+        component: () =>
+            import ('@/views/login/auth-redirect'),
+        hidden: true
+    },
+    {
+        path: '/404',
+        component: () =>
+            import ('@/views/error-page/404'),
+        hidden: true
+    },
+    {
+        path: '/401',
+        component: () =>
+            import ('@/views/error-page/401'),
+        hidden: true
+    },
+    {
+        path: '/profile',
+        component: Layout,
+        redirect: '/profile/index',
+        hidden: true,
+        children: [{
+            path: 'index',
+            component: () =>
+                import ('@/views/profile/index'),
+            name: 'Profile',
+            meta: { title: 'Profile', icon: 'user', noCache: true }
+        }]
+    }
 ]
 
 /**
@@ -118,35 +123,36 @@ export const pickScheme = pickscheme
 export const fillForms = fillforms
 export const meetingBooking = meetingbooking
 export const stockExcavation = stockexcavation
-/*export const asyncRoutes = [
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [
+export const assets_Management = assets_management //export สินทรัพย์
+    /*export const asyncRoutes = [
       {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        path: '/',
+        component: Layout,
+        redirect: '/dashboard',
+        children: [
+          {
+            path: 'dashboard',
+            component: () => import('@/views/dashboard/index'),
+            name: 'Dashboard',
+            meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+          }
+        ]
       }
-    ]
-  }
-]*/
+    ]*/
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support.
+    // mode: 'history', // require service support.
 
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
 })
 
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+    const newRouter = createRouter()
+    router.matcher = newRouter.matcher // reset router
 }
 
 export default router

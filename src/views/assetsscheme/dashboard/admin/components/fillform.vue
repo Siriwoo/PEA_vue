@@ -57,10 +57,6 @@ a {
 </style>
 
 <script>
-
-// eslint-disable-next-line
-/* eslint-disable */
-
   import { mapGetters, mapActions, mapState } from 'vuex'
   import axios from 'axios'
   //  console.log(mapState(['g_text']))

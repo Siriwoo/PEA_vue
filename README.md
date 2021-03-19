@@ -1,3 +1,5 @@
 # PEA_vue
 
-Hi i'm a :bear:
+npm i to install
+--------------------------------------
+run project: npm run dev

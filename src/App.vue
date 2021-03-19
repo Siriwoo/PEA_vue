@@ -8,25 +8,7 @@
 
 <script>
 export default {
-  name: 'App',
-  /*created() {
-   if (this.$workbox) {
-     this.$workbox.addEventListener("waiting", () => {
-       this.prompt = true;
-     });
-   }
- },
- methods: {
-   async upgrade() {
-     this.prompt = false;
-     await this.$workbox.messageSW({ type: "SKIP_WAITING" });
-   }
- },
- data() {
-   return {
-     prompt: false
-   };
- }*/
+  name: 'App'
 }
 </script>
 <style lang="scss">

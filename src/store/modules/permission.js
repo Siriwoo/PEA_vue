@@ -1,15 +1,20 @@
-import { asyncRoutes,
-  constantRoutes,
-  resetRouter,
-  pubLisher,
-  deVices,
-  loCation,
-  stocKecar,
-  pickScheme,
-  fillForms,
-  meetingBooking,
-  stockExcavation,
-  lineMgm } from '@/router'
+// eslint-disable-next-line
+/* eslint-disable */
+import {
+    asyncRoutes,
+    constantRoutes,
+    resetRouter,
+    pubLisher,
+    deVices,
+    loCation,
+    stocKecar,
+    pickScheme,
+    fillForms,
+    meetingBooking,
+    stockExcavation,
+    assets_Management,
+    lineMgm
+} from '@/router'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -17,11 +22,11 @@ import { asyncRoutes,
  * @param route
  */
 function hasPermission(roles, route) {
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
-  } else {
-    return true
-  }
+    if (route.meta && route.meta.roles) {
+        return roles.some(role => route.meta.roles.includes(role))
+    } else {
+        return true
+    }
 }
 
 /**
@@ -30,88 +35,91 @@ function hasPermission(roles, route) {
  * @param roles
  */
 export function filterAsyncRoutes(routes, roles) {
-  const res = []
+    const res = []
 
-  routes.forEach(route => {
-    const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
-      if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
-      }
-      res.push(tmp)
-    }
-  })
+    routes.forEach(route => {
+        const tmp = {...route }
+        if (hasPermission(roles, tmp)) {
+            if (tmp.children) {
+                tmp.children = filterAsyncRoutes(tmp.children, roles)
+            }
+            res.push(tmp)
+        }
+    })
 
-  return res
+    return res
 }
 
 const state = {
-  routes: [],
-  addRoutes: []
+    routes: [],
+    addRoutes: []
 }
 
 const mutations = {
-  SET_ROUTES: (state, routes) => {
-    state.addRoutes = routes
-    state.routes = constantRoutes.concat(routes)
-  }
+    SET_ROUTES: (state, routes) => {
+        state.addRoutes = routes
+        state.routes = constantRoutes.concat(routes)
+    }
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
-    return new Promise(resolve => {
+    generateRoutes({ commit }, roles) {
+        return new Promise(resolve => {
 
-      /*let accessedRoutes
-      if (!roles.includes('admin')) {
-        console.log('do');
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }*/
-      //console.log(asyncRoutes);
-      commit('SET_ROUTES', asyncRoutes)
-      resolve(asyncRoutes)
-    })
-  },
-  generateRoutesScheme({ commit }, Scheme) {
-    return new Promise(resolve => {
-      console.log('Client pick '+Scheme);
-      resetRouter()
-      if(Scheme=='publisher'){
-        commit('SET_ROUTES', pubLisher)
-        resolve(pubLisher)
-      }else if (Scheme =='devices') {
-        commit('SET_ROUTES', deVices)
-        resolve(deVices)
-      }else if (Scheme =='location') {
-        commit('SET_ROUTES', loCation)
-        resolve(loCation)
-      }else if (Scheme =='stockecar') {
-        commit('SET_ROUTES', stocKecar)
-        resolve(stocKecar)
-      }else if (Scheme =='pickscheme') {
-        commit('SET_ROUTES', pickScheme)
-        resolve(pickScheme)
-      }else if (Scheme =='fillforms') {
-        commit('SET_ROUTES', fillForms)
-        resolve(fillForms)
-      }else if (Scheme =='meetingbooking') {
-        commit('SET_ROUTES', meetingBooking)
-        resolve(meetingBooking)
-      }else if (Scheme =='stockexcavation') {
-        commit('SET_ROUTES', stockExcavation)
-        resolve(stockExcavation)
-      }else {
-        commit('SET_ROUTES', lineMgm)
-        resolve(lineMgm)
-      }
-    })
-  }
+            /*let accessedRoutes
+            if (!roles.includes('admin')) {
+              console.log('do');
+              accessedRoutes = asyncRoutes || []
+            } else {
+              accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+            }*/
+            //console.log(asyncRoutes);
+            commit('SET_ROUTES', asyncRoutes)
+            resolve(asyncRoutes)
+        })
+    },
+    generateRoutesScheme({ commit }, Scheme) {
+        return new Promise(resolve => {
+            console.log('Client pick ' + Scheme);
+            resetRouter()
+            if (Scheme == 'publisher') {
+                commit('SET_ROUTES', pubLisher)
+                resolve(pubLisher)
+            } else if (Scheme == 'devices') {
+                commit('SET_ROUTES', deVices)
+                resolve(deVices)
+            } else if (Scheme == 'location') {
+                commit('SET_ROUTES', loCation)
+                resolve(loCation)
+            } else if (Scheme == 'stockecar') {
+                commit('SET_ROUTES', stocKecar)
+                resolve(stocKecar)
+            } else if (Scheme == 'pickscheme') {
+                commit('SET_ROUTES', pickScheme)
+                resolve(pickScheme)
+            } else if (Scheme == 'fillforms') { //แบบฟอร์ม
+                commit('SET_ROUTES', fillForms)
+                resolve(fillForms)
+            } else if (Scheme == 'meetingbooking') { //จองห้องประชุม
+                commit('SET_ROUTES', meetingBooking)
+                resolve(meetingBooking)
+            } else if (Scheme == 'stockexcavation') { //สถิติหุ้น
+                commit('SET_ROUTES', stockExcavation)
+                resolve(stockExcavation)
+            } else if (Scheme == 'assets_management') { //จัดการรายการทรัพย์สิน
+                commit('SET_ROUTES', assets_Management)
+                resolve(assets_Management)
+            } else { //แชทบอท
+                commit('SET_ROUTES', lineMgm)
+                resolve(lineMgm)
+            }
+        })
+    }
 }
 
 export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
+    namespaced: true,
+    state,
+    mutations,
+    actions
 }

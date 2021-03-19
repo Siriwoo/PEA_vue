@@ -8,9 +8,9 @@
     element-loading-background="rgba(0, 0, 0, 0.8)"
     style="width: 100%">
 
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar class="sidebar-container" />
-    <div :class="{hasTagsView:needTagsView}" class="main-container">
+    <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
+    <!-- <sidebar class="sidebar-container" /> -->
+    <div :class="{hasTagsView:needTagsView}" class="main-containerbook">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
@@ -19,128 +19,6 @@
         <settings />
       </right-panel-->
     </div>
-    <v-footer color="secondary" app inset>
-        <!--span class="cw">
-          &copy; 2020
-        </span-->
-        <div id="xxx">
-          <v-speed-dial
-            v-model="bottombuttom.show"
-            :top="top"
-            :bottom="bottom"
-            :right="right"
-            :left="left"
-            :direction="direction"
-            :open-on-hover="hover"
-            :transition="transition"
-          >
-
-            <v-btn
-              fab
-              dark
-              small
-              color="red"
-              v-if="bottombuttom.deleteIntent"
-              @click = "do_click_speed_dail('deleteIntent')"
-            >
-              <i class="el-icon-delete"></i>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              small
-              color="#212121"
-              v-if="bottombuttom.mergeIntent"
-              @click = "do_click_speed_dail('mergeIntent')"
-            >
-              <i class="el-icon-document-copy"></i>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              small
-              color="#212121"
-              @click = "do_click_speed_dail('deSelect')"
-              v-if="bottombuttom.deSelect"
-            >
-              <i class="el-icon-thumb"></i>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              small
-              color="#212121"
-              v-if="bottombuttom.editIntent"
-              @click = "do_click_speed_dail('editIntent')"
-            >
-              <i class="el-icon-edit"></i>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              small
-              color="#212121"
-              v-if="bottombuttom.editIntent"
-              @click = "do_click_speed_dail('useThisintent')"
-            >
-              <i class="el-icon-phone-outline"></i>
-            </v-btn>
-          </v-speed-dial>
-        </div>
-
-      </v-footer>
-      <v-dialog
-     v-model="dialogvueapp"
-     width="500"
-   >
-
-     <v-card>
-       <v-card-title
-         class="headline grey lighten-2"
-         primary-title
-       >
-         <v-icon>{{AlertIcon}}</v-icon> {{textAlertTitle}}
-       </v-card-title>
-
-       <v-card-text>
-         {{textalert}}
-       </v-card-text>
-
-       <v-divider></v-divider>
-
-       <v-card-actions>
-         <v-spacer></v-spacer>
-         <v-btn
-           color="primary"
-           flat
-           @click="dialogvueapp = false"
-         >
-           ตามนั้น
-         </v-btn>
-       </v-card-actions>
-     </v-card>
-   </v-dialog>
-   <v-dialog
-     v-model="g_dialog.single_img.model"
-     scrollable fullscreen
-     max-width="500px"
-     transition="dialog-transition"
-   >
-   <v-card>
-     <v-toolbar dark color="primary" height="30px;">
-       <v-btn icon dark @click="g_dialog.single_img.model = false">
-         <v-icon>close</v-icon>
-       </v-btn>
-
-     </v-toolbar>
-
-     <div class="mt-4 px-2 py-1 parentimg">
-       {{g_dialog.single_img.title}}
-       <img :src="g_dialog.single_img.url"/>
-       {{g_dialog.single_img.description}}
-     </div>
-   </v-card>
-   </v-dialog>
   </div>
 
 </template>
@@ -180,8 +58,7 @@ export default {
       needTagsView: state => state.settings.tagsView,
       fixedHeader: state => state.settings.fixedHeader
     }),
-    ...mapGetters(['usermenu','locations','loadingmainpage'
-    ,'bottombuttom','g_dialog']),
+    ...mapGetters(['locations','loadingmainpage']),
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
@@ -226,29 +103,7 @@ export default {
       isloadlocation: false,
       isloadequiptype: false,
       isloadtoken: false,
-      isloadallequipttype: false,
-      lmenu : false,
-      dialogvueapp: false,
-      textalert: '',
-      textAlertTitle: '',
-      AlertIcon: '',
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire'
-      }],
-      direction: 'top',
-      fab: false,
-      fling: false,
-      hover: false,
-      tabs: null,
-      top: false,
-      right: true,
-      bottom: true,
-      left: false,
-      transition: 'slide-y-reverse-transition'
+      isloadallequipttype: false
     }
   },
   created() {
@@ -265,33 +120,6 @@ export default {
       tmp.info = 'loadingmainpage'
       tmp.loadingmainpage = false
       this.$store.dispatch('info/commitinfo', tmp)
-    },
-    do_click_speed_dail: function (whatClick) {
-      // console.log('i click')
-      console.log(this.bottombuttom)
-      var data = {}
-      if (whatClick === 'deSelect') {
-        console.log('deSelect')
-        data.dialogEdit = false
-        data.deSelectClick = true
-        //this.$store.dispatch('chatbot/c_bottombuttom', data)
-        //this.c_bottombuttom(data)
-        // console.log(this.bottombuttom.deSelectClick)
-      } else if (whatClick === 'editIntent') {
-        console.log('editIntent')
-        data.dialogEdit = true
-        //this.$store.dispatch('chatbot/c_bottombuttom', data)
-      } else if (whatClick === 'mergeIntent') {
-        console.log('mergeIntent')
-        data.mergeIntentClick = true
-        //this.$store.dispatch('chatbot/c_bottombuttom', data)
-      } else if (whatClick === 'useThisintent') {
-        console.log('useThisintent')
-        data.useThisintentClick = true
-
-      }
-      this.$store.dispatch('chatbot/c_bottombuttom', data)
-      console.log(this.bottombuttom)
     },
     loadlocation(){
       //NProgress.start()
@@ -383,22 +211,12 @@ export default {
       top: 0;
     }
   }
-  @media print {
-    .main-container {
+  //@media print {
+    .main-containerbook {
       margin-left: 0 !important;
     }
-  }
-  #xxx .v-speed-dial {
-    position: absolute;
-    margin-right: 11px;
-    /*margin-bottom: 25px;*/
-  }
-  .parentimg img{
-    width: 100%;
-  }
-  #xxx .v-btn--floating {
-    position: relative;
-  }
+  //}
+
   .drawer-bg {
     background: #000;
     opacity: 0.3;

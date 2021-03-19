@@ -39,6 +39,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import useform from './components/useform.vue'
 import fillform from './components/fillform.vue'
 import setting from './components/setting.vue'
