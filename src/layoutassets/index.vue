@@ -5,7 +5,7 @@
   v-loading="loadingmainpage"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
+    element-loading-background="rgba(206, 218, 232, 0.9)"
     style="width: 100%">
 
     <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
@@ -201,6 +201,7 @@ export default {
   @import "~@/styles/variables.scss";
 
   .app-wrapper {
+    background: #737AB9;
     @include clearfix;
     position: relative;
     height: 100%;
@@ -213,12 +214,13 @@ export default {
   }
   //@media print {
     .main-containerbook {
+      background: #737AB9;
       margin-left: 0 !important;
     }
   //}
 
   .drawer-bg {
-    background: #000;
+    background: #737AB9;
     opacity: 0.3;
     width: 100%;
     top: 0;
@@ -238,6 +240,7 @@ export default {
 
   .hideSidebar .fixed-header {
     width: calc(100% - 54px)
+    
   }
 
   .mobile .fixed-header {

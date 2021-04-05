@@ -1,6 +1,6 @@
 <template>
   <v-container class="py-0 px-0 mt-0 ">
-    fillform
+    test page
   </v-container>
 
 </template>
@@ -57,6 +57,8 @@ a {
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import { mapGetters, mapActions, mapState } from 'vuex'
   import axios from 'axios'
   //  console.log(mapState(['g_text']))

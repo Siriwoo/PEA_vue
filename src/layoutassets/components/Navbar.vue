@@ -1,23 +1,12 @@
 <template>
-  <div class="navbarbk">
+  <div class="navbaras">
     <!-- <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
-    <div class="topmenubk">
-      <i class="el-icon-date" /> ระบบจองห้องประชุม
+    <div class="topmenuas">
+      <i class="el-icon-tickets custom-icon" />
+      ระบบจัดการทรัพย์สิน
     </div>
 
     <div class="right-menu">
-      <!--<template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
-
-        <error-log class="errLog-container right-menu-item hover-effect" />
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
-        <el-tooltip content="Global Size" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-      </template>-->
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
 
@@ -55,6 +44,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import store from '@/store'
 import { mapGetters, mapState } from 'vuex'
 import Hamburger from '@/components/Hamburger'
@@ -140,29 +131,31 @@ export default {
 <style lang="scss">
 @media print {
   @page { size: landscape; }
-  .navbarbk {
+  .navbaras {
     display: none;
   }
   .sidebar-container{
+
     display: none;
   }
   .handle-button{
     display: none;
+
   }
 }
-.topmenubk{
+.topmenuas{
   padding-left: 10px;
-  margin-top: 16px;
+  margin-top: 15px;
   width: 62%;
   color: white;
   display: inline-block;
+
 }
-.navbarbk {
+.navbaras {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #6b3074;
-  // box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  background: #32367B;
 
   .hamburger-container {
     line-height: 46px;
@@ -187,6 +180,9 @@ export default {
     display: inline-block;
     vertical-align: top;
   }
+  .custom-icon {
+   font-size: 1.2rem;
+}
 
   .right-menu {
     float: right;
@@ -202,7 +198,7 @@ export default {
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
-      color: #5a5e66;
+      color: #fff;
       vertical-align: text-bottom;
 
       &.hover-effect {

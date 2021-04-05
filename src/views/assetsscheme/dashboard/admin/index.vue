@@ -1,7 +1,11 @@
 <template>
   <div class="dashboard-editor-container-ff">
+   <v-col></v-col>
     <v-tabs
+    class="text"
+      background-color="#32367B"
       v-model="tab"
+      fixed-tabs
       centered
       dark
       icons-and-text
@@ -9,30 +13,36 @@
       <v-tabs-slider></v-tabs-slider>
 
       <v-tab href="#tab-1">
-        บันทึกข้อมูล
-        <i class="el-icon-folder-opened custom-icon"></i>
+       สินทรัพย์<i class="el-icon-document custom-icon"></i>
       </v-tab>
 
       <v-tab href="#tab-2">
-        สถิติ
-        <i class="el-icon-s-order custom-icon"></i>
+        เพิ่ม-แก้ไขสินทรัพย์
+        <i class="el-icon-document-add custom-icon"></i>
       </v-tab>
 
       <v-tab href="#tab-3">
+        ฐานข้อมูล
+        <i class="el-icon-files custom-icon"></i>
+      </v-tab>
+
+      <v-tab href="#tab-4">
         ตั้งค่า
-        <i class="el-icon-s-tools custom-icon"></i>
+        <i class="el-icon-s-data custom-icon"></i>
       </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
       <v-tab-item
-        v-for="i in 3"
+        v-for="i in 4"
         :key="i"
         :value="'tab-' + i"
       >
-      <useform v-if="i=='1'" :key="componentKey"/>
-      <fillform v-if="i=='2'" :key="componentKey"/>
+      <showdataasset v-if="i=='1'" :key="componentKey"/>
+      <dataassetform v-if="i=='2'" :key="componentKey"/>
       <setting v-if="i=='3'" :key="componentKey"/>
+      <unknower v-if="i=='4'" :key="componentKey"/>
+
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -41,8 +51,9 @@
 <script>
 // eslint-disable-next-line
 /* eslint-disable */
-import useform from './components/useform.vue'
-import fillform from './components/fillform.vue'
+import showdataasset from './components/showdataasset.vue'
+import dataassetform from './components/dataassetform.vue'
+import unknower from './components/unknower.vue'
 import setting from './components/setting.vue'
 import { fetchpic } from '@/mixins/fetchpic'
 import { freqmethods } from '@/mixins/freqmethods'
@@ -55,9 +66,11 @@ export default {
   name: 'DashboardAdmin',
   mixins: [fetchpic,freqmethods],
   components: {
-    useform,
-    fillform,
-    setting
+    showdataasset,
+    dataassetform,
+    setting,
+    unknower
+
   },
   computed: {
     ...mapGetters([
@@ -162,8 +175,8 @@ export default {
     loadavatarequipt(){
       if(this.equiptype.length>0){
         this.equiptypemo = this.equiptype.filter(c=>{
-          //console.log(e.equip.includes("ยังไม่ทราบ"));
-          return !c.equip.includes("ยังไม่ทราบ")
+          //console.log(e.equip.includes("??????????"));
+          return !c.equip.includes("??????????")
         }).map(e=>{
 
             var tn = ''
@@ -322,28 +335,6 @@ export default {
           .then((r) => {
             console.log(r);
           })
-        //tmp.param1.jobtype = 'ติดตั้ง'
-        //tmp.param1.seldatetype = 'opendate'
-        /*
-        this.$store.dispatch('info/loadinfo', tmp).then((r) =>{
-          this.flagloadgraph.week.opendate.info = r.data[0]
-          this.flagloadgraph.week.opendate.flag = true
-        })
-        tmp.param1.seldatetype = 'getdate'
-        this.$store.dispatch('info/loadinfo', tmp).then((r) =>{
-          this.flagloadgraph.week.getdate.info = r.data[0]
-          this.flagloadgraph.week.getdate.flag = true
-        })
-        tmp.param1.seldatetype = 'operation'
-        this.$store.dispatch('info/loadinfo', tmp).then((r) =>{
-          this.flagloadgraph.week.operation.info = r.data[0]
-          this.flagloadgraph.week.operation.flag = true
-        })
-        tmp.param1.seldatetype = 'finish'
-        this.$store.dispatch('info/loadinfo', tmp).then((r) =>{
-          this.flagloadgraph.week.finish.info = r.data[0]
-          this.flagloadgraph.week.finish.flag = true
-        })*/
       }else{
         console.log('no userdata redirect to login page, should not here');
       }
@@ -362,12 +353,8 @@ export default {
 </script>
 
 <style lang="scss">
-.dashboard-editor-container-ff{
-
-}
-
 .text {
-    font-size: 17px;
+    font-size: 20px;
 }
 .custom-icon {
    font-size: 1.5rem;
@@ -453,7 +440,7 @@ export default {
   width: 1300px;
   margin: auto;
   padding: 0px;
-  background-color: rgb(240, 242, 245);
+  background-color: #737AB9;
   position: relative;
 
   .github-corner {
@@ -479,6 +466,7 @@ export default {
       font-size: 15px;
   }
   .previewfull{
+
     margin-right: 7px;
     width: 35px;
   }
@@ -500,24 +488,19 @@ export default {
     color: orange
   }
   .dashboard-editor-container-ff{
+
     .v-slide-group__next, .v-slide-group__prev{
       display: none !important;
     }
     width: 100%;
     padding: 0px;
-    background-color: #f0f2f5;
+    background-color: rgb(240, 242, 245);
     position: relative;
     .github-corner {
       position: absolute;
       top: 0px;
       border: 0;
       right: 0;
-    }
-
-    .chart-wrapper {
-      background: #fff;
-      padding: 16px 16px 0;
-      margin-bottom: 32px;
     }
   }
   .suitbox{

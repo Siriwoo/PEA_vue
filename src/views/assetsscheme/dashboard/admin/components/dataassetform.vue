@@ -4,7 +4,7 @@
   <el-row :gutter="10" >
     <el-col :xs="6" :sm="6">
       <div class="app-container ">
-        <el-select  filterable placeholder="Select">
+        <el-select v-model="creport.selequipt" filterable placeholder="Select">
           <el-option
             v-for="item in optioneq"
             :key="item.value"
@@ -14,11 +14,11 @@
           </el-option>
         </el-select>
       </div>
-      <div class="buttun_text"></div>
+      <div class="buttun_text">ตัวเลือก A</div>
     </el-col>
     <el-col :xs="5" :sm="5">
       <div class="">
-        <el-select filterable placeholder="Select">
+        <el-select v-model="creport.seltype" filterable placeholder="Select">
           <el-option
             v-for="item in optionst"
             :key="item.value"
@@ -28,7 +28,7 @@
           </el-option>
         </el-select>
       </div>
-      <div class="buttun_text">เลือกประเภทอุปกรณ์</div>
+      <div class="buttun_text">ตัวเลือก B</div>
     </el-col>
     </el-row>
     </div>
