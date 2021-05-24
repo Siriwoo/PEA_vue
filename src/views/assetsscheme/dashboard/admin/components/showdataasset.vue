@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <v-app-bar color="#F0F0E8">
@@ -12,7 +13,7 @@
           v-model="searchassets"
           clearable
           flat
-          solo-inverted
+          solo
           hide-details
           prepend-inner-icon="el-icon-search"
           label="ค้นหาอุปกรณ์"
@@ -23,110 +24,178 @@
     </v-app-bar>
     <v-content class="py-4 px-0 conb">
       <v-content class="py-1 px-5 conb">
-        <v-row
-          ><v-col cols="8" sm="4">
-            <v-select :items="items" label="ประเภทอุปกรณ์" solo></v-select>
-          </v-col>
-          <v-col cols="8" sm="4">
-            <v-select
-              :items="items"
-              label="พื้นที่ดูแล"
-              solo
-            ></v-select> </v-col
-        ></v-row> </v-content
-    ></v-content>
+        <el-row :gutter="10">
+          <el-col :xs="5" :sm="5">
+            <div class="">
+              <el-select filterable placeholder="Select">
+                <el-option> </el-option>
+              </el-select>
+            </div>
+            <div class="buttun_text">ประเภทอุปกรณ์</div>
+          </el-col>
+
+          <el-col :xs="5" :sm="5">
+            <div class="">
+              <el-select filterable placeholder="Select">
+                <el-option> </el-option>
+              </el-select>
+            </div>
+            <div class="buttun_text">พื้นที่ดูแล</div>
+          </el-col>
+        </el-row>
+      </v-content>
+    </v-content>
 
     <v-content class="conb px-5">
-      <v-data-iterator
-        :items="beers"
-        :items-per-page.sync="ipp"
-        :page.sync="page"
-        hide-default-footer
-        class="d-flex flex-column mh-100 overflow-hidden"
-      >
-        <template v-slot:header>
-          <div class="headline white--text mr-2 text-truncate py-3"></div>
-        </template>
-        <!-- แสดงข้อมูลในรูปแบบการ์ด -->
-        <template v-slot:default="props">
-          <v-row class="fill-height overflow-auto" id="container">
-            <v-col
-              v-for="(item, idx) in props.items"
-              :key="item.name"
-              :cols="12 / itemsPerRow"
-              class="py-2"
-            >
-              <!-- การ์ดใส่อุปกรณ์ คลิกเพื่อดูข้อมูลด้านใน-->
-              <v-card class="card fill-height" @click="clk">
-                <v-card-title>
-                  <!--name-->
-                  <span class="font-weight-light text-truncate">
-                    <!--ID Number && Name-->
-                    <span v-text="item.id"></span> {{ item.name }}
-                    <v-chip
-                      small
-                      outlined
-                      class=""
-                      v-if="item.id.toString() == beers.length.toString()"
-                    ></v-chip>
-                  </span>
-                </v-card-title>
-                <v-divider></v-divider>
-                <v-card-text>
-                  <!--detail-->
-                  <span v-html="item.description" class="mr-2"></span>
-                  <!--date-->
-                  <v-chip v-text="item.first_brewed"></v-chip>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-        </template>
-        <template v-slot:footer>
-          <v-row
-            class="no-gutters mt-auto py-2 shrink"
-            align="center"
-            justify="center"
+      <v-dialog v-model="dialog" scrollable max-width="800px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-data-iterator
+            :items="beers"
+            :items-per-page.sync="ipp"
+            :page.sync="page"
+            hide-default-footer
+            class="d-flex flex-column mh-100 overflow-hidden"
           >
-            <span class="mx-2">Rows per page</span>{{ rowsPerPage }} (based on
-            viewport height)
+            <template v-slot:header>
+              <div class="headline white--text mr-2 text-truncate py-3"></div>
+            </template>
+            <!-- แสดงข้อมูลในรูปแบบการ์ด -->
+            <template v-slot:default="props" class="card">
+              <v-row class="fill-height overflow-auto" id="container">
+                <v-col
+                  v-for="item in props.items"
+                  :key="item.name"
+                  :cols="12 / itemsPerRow"
+                  class="py-2"
+                >
+                  <!-- การ์ดใส่อุปกรณ์ คลิกเพื่อดูข้อมูลด้านใน-->
+                  <v-card class="fill-height" v-bind="attrs" v-on="on" >
+                    <div class="text-center">
+                      <img height="200px" class="card-img-top" v-bind:src="item.image_url" alt="image">
+                    </div>
+                    
+                    <v-card-title>
+                      <!--name-->
+                      <span class="font-weight-light text-truncate">
+                        <!--ID Number && Name-->
+                        <span v-text="item.id"></span> {{ item.name }}
+                        <v-chip
+                          small
+                          outlined
+                          class=""
+                          v-if="item.id.toString() == beers.length.toString()"
+                        ></v-chip>
+                      </span>
+                    </v-card-title>
+                    <v-divider></v-divider>
+                    <v-card-text>
+                      <!--detail-->
+                      <span v-html="item.tagline" class="mr-2"></span>
+                      <!--date-->
+                      <v-chip v-text="item.first_brewed"></v-chip>
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </template>
+            <template v-slot:footer>
+              <v-row
+                class="no-gutters mt-auto py-2 shrink"
+                align="center"
+                justify="center"
+              >
+                <span class="mx-2">Rows per page</span>{{ rowsPerPage }} (based
+                on viewport height)
 
-            <v-spacer></v-spacer>
-            <span class="mr-4 grey--text">
-              Page {{ page }} of
-              <span
-                v-text="numberOfPages"
-                class="font-weight-bold primary--text"
-              ></span>
-            </span>
-            <v-btn
-              small
-              dark
-              rounded
-              color="blue darken-3"
-              class="mr-1"
-              @click="formerPage"
-            >
-              <i class="el-icon-back custom-icon"></i>
-            </v-btn>
-            <v-btn
-              small
-              dark
-              rounded
-              color="blue darken-3"
-              class="ml-1"
-              @click="nextPage"
-            >
-              <i class="el-icon-right custom-icon"></i>
-            </v-btn>
-          </v-row>
+                <v-spacer></v-spacer>
+                <span class="mr-4 grey--text">
+                  Page {{ page }} of
+                  <span
+                    v-text="numberOfPages"
+                    class="font-weight-bold primary--text"
+                  ></span>
+                </span>
+                <v-btn
+                  small
+                  dark
+                  rounded
+                  color="blue darken-3"
+                  class="mr-1"
+                  @click="formerPage"
+                >
+                  <i class="el-icon-back custom-icon"></i>
+                </v-btn>
+                <v-btn
+                  small
+                  dark
+                  rounded
+                  color="blue darken-3"
+                  class="ml-1"
+                  @click="nextPage"
+                >
+                  <i class="el-icon-right custom-icon"></i>
+                </v-btn>
+              </v-row>
+            </template>
+          </v-data-iterator>
         </template>
-      </v-data-iterator>
+        <!-- Popup Dialog แสดงรายละเอียดของอุปกรณ์ **หาเงื่อนไขเพิ่ม-->
+        <v-card>
+          <div v-for="beers in beers" :key="beers">
+            <v-card-title>
+              <div class="headline">{{ beers.name }}</div>
+            </v-card-title>
+            <v-card-text>
+              <v-container></v-container>
+
+              <small>แสดงรายละเอียดของอุปกรณ์</small>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <!--Action เมื่อดูข้อมูลเสร็จ-->
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                close
+              </v-btn>
+            </v-card-actions>
+          </div>
+        </v-card>
+      </v-dialog>
     </v-content>
   </div>
 </template>
 
 <style lang="scss">
+.wrapper-image {
+    height: 12rem;
+    display: flex;
+    align-items: flex-start;
+}
+.card-img-top {
+  width: auto;
+  border-top-left-radius: calc(0.25rem - 1px);
+  border-top-right-radius: calc(0.25rem - 1px);
+}
+
+.card {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  height: 650px;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.card-body{
+position: absolute;
+bottom:0;
+}
 .boxmain {
   padding-left: 5px;
 }
@@ -148,7 +217,7 @@
   background: #e9eef2;
 }
 .cont_list {
-  color: #8094AE;
+  color: #8094ae;
 }
 h1,
 h2 {
@@ -201,7 +270,6 @@ li {
 <script>
 // eslint-disable-next-line
 /* eslint-disable */
-import { setUserclick, getUserclick } from "@/utils/auth";
 import Pagination from "@/components/Pagination";
 import DataTable from "@/views/components/DataTable";
 import { mapGetters, mapActions, mapState } from "vuex";
@@ -212,6 +280,7 @@ export default {
   components: { Pagination, DataTable },
   data() {
     return {
+      dialog: false,
       componentKey_dAns: 0,
       loading3: false,
       dialognotsave: false,
@@ -226,6 +295,7 @@ export default {
       },
       bottom: false,
       beers: [],
+      assets: [],
       assetdata: [],
       orassetdata: [],
       rowsPerPageArray: [3, 4, 6],
@@ -294,78 +364,8 @@ export default {
           setTimeout(() => {
             this.calcRowsPerPage();
           }, 100);
+          console.log(response);
         });
-    },
-    getData() {
-      if (typeof getUserclick() !== "undefined") {
-        var tmp = JSON.parse(getUserclick());
-        if (typeof JSON.parse(getUserclick()).searchequipt !== "undefined") {
-          tmp.searchassets = this.searchassets;
-          console.log(JSON.parse(getUserclick()));
-
-          setUserclick(tmp);
-        } else {
-          tmp.searchassets = {};
-          tmp.searchassets = this.searchassets;
-          setUserclick(tmp);
-        }
-        tmp.checksearch = this.checksearch;
-        setUserclick(tmp);
-      }
-      //console.log(this.checksearch);
-      this.searchassets = this.searchassets.toUpperCase();
-      /*console.log('this.forsearchdevice');
-      console.log(this.forsearchdevice);
-      console.log('this.forsearchdevice');*/
-
-      var st = this.searchassets.split(" ");
-      //console.log(st);
-      var rx = "";
-      for (var i = 0; i < st.length; i++) {
-        rx += st[i];
-        if (i < st.length - 1) {
-          rx += "|";
-        }
-      }
-      var re = new RegExp(rx, "g");
-
-      //console.log(re);
-      return new Promise((resolve, reject) => {
-        try {
-          console.log(c);
-          this.assetdata = "";
-          this.assetdata = this.orassetdata.filter((e) => {
-            var astext = JSON.stringify(e);
-            var astext = astext.toUpperCase();
-            console.log(astext);
-            var matches = astext.match(re);
-
-            if (matches != null) {
-              matches = [...new Set(matches)];
-              //console.log(matches);
-            }
-          });
-          //console.log(this.ortableData);
-          //getonly that page
-          this.reindex();
-          /*console.log(this.tableData);
-          this.tableData = this.tableData.filter(e=>{
-            return ((e.ที่ <= c.page*30)&&(e.ที่ >= ((c.page-1)*10)+1))
-          })
-          console.log(this.tableData);
-          this.reindex()*/
-          resolve(this.assetdata);
-        } catch (e) {
-          console.log(e);
-          reject(e);
-        }
-      });
-    },
-    reindex() {
-      for (var i = 0; i < this.assetdata.length; i++) {
-        this.assetdata[i].ที่ = i + 1;
-        //this.tableData[i].id = i+1
-      }
     },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
@@ -391,7 +391,6 @@ export default {
   },
   created() {
     this.getBeers();
-    this.getData();
   },
   mounted() {
     window.addEventListener("resize", () => {
