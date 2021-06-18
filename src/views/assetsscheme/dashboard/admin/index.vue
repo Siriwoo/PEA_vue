@@ -1,370 +1,51 @@
 <template>
-  <div class="dashboard-editor-container-ff">
-   <v-col></v-col>
-    <v-tabs
-    class="text"
-      background-color="#32367B"
-      v-model="tab"
-      fixed-tabs
-      centered
-      dark
-      icons-and-text
-    >
-      <v-tabs-slider></v-tabs-slider>
-
-      <v-tab href="#tab-1">
-       สินทรัพย์<i class="el-icon-document custom-icon"></i>
-      </v-tab>
-
-      <v-tab href="#tab-2">
-        เพิ่ม-แก้ไขสินทรัพย์
-        <i class="el-icon-document-add custom-icon"></i>
-      </v-tab>
-
-      <v-tab href="#tab-3">
-        ฐานข้อมูล
-        <i class="el-icon-files custom-icon"></i>
-      </v-tab>
-
-      <v-tab href="#tab-4">
-        ตั้งค่า
-        <i class="el-icon-s-data custom-icon"></i>
-      </v-tab>
-    </v-tabs>
-
-    <v-tabs-items v-model="tab">
-      <v-tab-item
-        v-for="i in 4"
-        :key="i"
-        :value="'tab-' + i"
-      >
-      <showdataasset v-if="i=='1'" :key="componentKey"/>
-      <dataassetform v-if="i=='2'" :key="componentKey"/>
-      <setting v-if="i=='3'" :key="componentKey"/>
-      <unknower v-if="i=='4'" :key="componentKey"/>
-
-      </v-tab-item>
-    </v-tabs-items>
+  <div>
+    <span>Hello world</span>
   </div>
 </template>
 
 <script>
-// eslint-disable-next-line
-/* eslint-disable */
-import showdataasset from './components/showdataasset.vue'
-import dataassetform from './components/dataassetform.vue'
-import unknower from './components/unknower.vue'
-import setting from './components/setting.vue'
-import { fetchpic } from '@/mixins/fetchpic'
-import { freqmethods } from '@/mixins/freqmethods'
-import tooldefault from '@/assets/default/tools.png'
-import imgload from '@/assets/loading/loadpic.gif'
-import { mapGetters } from 'vuex'
-import { getUserData, setUserclick, getUserclick } from '@/utils/auth'
 
-export default {
-  name: 'DashboardAdmin',
-  mixins: [fetchpic,freqmethods],
-  components: {
-    showdataasset,
-    dataassetform,
-    setting,
-    unknower
-
-  },
-  computed: {
-    ...mapGetters([
-      'roles',
-      'locations',
-      'equiptype',
-      'loadingmainpage',
-      'tokenStr'
-    ])
-  },
-  watch:{
-    bartype(v){
-      if(typeof getUserclick() !== 'undefined'){
-        var tmp = JSON.parse(getUserclick())
-        if(typeof JSON.parse(getUserclick()).dashscheme !== 'undefined'){
-          tmp.dashscheme.bartype = v
-        }else{
-          tmp.dashscheme = {
-            bartype:v
-          }
-        }
-        setUserclick(tmp)
-        this.loadsumalljob()
-        this.querygraph()
-
-      }
-    },
-    seldatetype(v){
-      if(typeof getUserclick() !== 'undefined'){
-        var tmp = JSON.parse(getUserclick())
-        if(typeof JSON.parse(getUserclick()).dashscheme !== 'undefined'){
-          tmp.dashscheme.seldatetype = v
-        }else{
-          tmp.dashscheme = {
-            seldatetype:v
-          }
-        }
-        setUserclick(tmp)
-      }
-
-    },
-    loadingmainpage(v){
-      //console.log(v);
-      if(!v){
-        //console.log('is here');
-        this.queryfirstvalue()
-      }
-    }
-  },
-  data() {
-    return {
-      tab: null,
-      text: 'xx',
-      seldatetype: '',
-      componentKey: 0,
-      datashowpanel: [],
-      is_data_fetched: false,
-      equiptypemo: [],
-      depart: '',
-      allequipt: 0,
-      bartype: 'week',
-      flagloadgraph:{
-      }
-    }
-  },
-  mounted() {
-    if(!this.loadingmainpage){
-      //console.log('again');
-      this.queryfirstvalue()
-    }
-    //do something after mounting vue instance
-    //console.log(this.equiptype);
-  },
-  methods: {
-    handleSetLineChartData(type) {
-      //console.log(type);
-      if(typeof getUserclick() !== 'undefined'){
-        var tmp = JSON.parse(getUserclick())
-        console.log(tmp);
-        if(typeof JSON.parse(getUserclick()).dashscheme !== 'undefined'){
-          tmp.dashscheme.typejob = type
-        }else{
-          tmp.dashscheme = {
-            typejob:type
-          }
-        }
-        setUserclick(tmp)
-      }
-      console.log(this.seldatetype);
-      //find between date by bartype
-
-
-    },
-    loaduserdata(){
-      if(typeof JSON.parse(getUserData()).depart !=='undefined' ){
-        this.depart = JSON.parse(getUserData()).depart
-      }else{
-        console.log('no userdata redirect to login page, should not here');
-      }
-
-    },
-    loadavatarequipt(){
-      if(this.equiptype.length>0){
-        this.equiptypemo = this.equiptype.filter(c=>{
-          //console.log(e.equip.includes("??????????"));
-          return !c.equip.includes("??????????")
-        }).map(e=>{
-
-            var tn = ''
-            if(e.equip_short!=''){
-              tn+=`(${e.equip_short})`
-            }
-            var o ={}
-            var t = ''
-            var x = ''
-            if(typeof JSON.parse(e.detail).pictures[0] !='undefined'){
-              t = JSON.parse(e.detail).pictures[0].picturetoken
-
-            }
-            o.equip = e.equip+tn
-            o.avatar = imgload
-            o.equiptypeID = e.id
-            o.meid = t
-            return o
-
-        })
-        var st = ''
-        var up = []
-        for (var i = 0; i < this.equiptypemo.length; i++) {
-          up.push(this.equiptypemo[i].meid)
-        }
-        var uq = [...new Set(up)];
-        //console.log(uq);
-        for (var i = 0; i < uq.length; i++) {
-          if(uq[i]!=''){
-            st+='mediaItemIds='+uq[i]
-            if(i<uq.length-1){
-              st+='&'
-            }
-          }
-
-        }
-        this.fetchmultipic(st,this.tokenStr).then(r=>{
-          //console.log(r);
-          var h = this.equiptypemo.map(e=>{
-            var oj = {}
-            oj.equip = e.equip
-            oj.equiptypeID = e.equiptypeID
-            oj.sum = e.sum
-            var g = r.mediaItemResults.find(f=>{
-              return f.mediaItem.id == e.meid
-            })
-            //console.log(g);
-            if(typeof g!= 'undefined'){
-              oj.avatar = g.mediaItem.baseUrl
-            }else{
-              oj.avatar = tooldefault
-            }
-
-            return oj
-          })
-          this.equiptypemo = h
-          var tmp = {
-            info: 'saveavatar',
-            equiptypeavatar: this.equiptypemo
-          }
-          this.$store.dispatch('info/commitinfo', tmp)
-          console.log(this.equiptypemo);
-        })
-      }
-
-      //console.log(this.equiptypemo);
-
-
-    },
-    loadsumalljob(){
-      //console.log();
-      var tmp = {}
-      tmp.info = 'sumalljob'
-      tmp.param1 = this.optionst.map(e=>{
-        var o = {
-          value:e.value,
-          headvalue:e.value.replace(/\/|-/g, "_")
-        }
-        return o
-      })
-      tmp.param2 = {}
-      if(typeof JSON.parse(getUserData()).depart !=='undefined' ){
-        tmp.param2.depart = JSON.parse(getUserData()).depart
-      }else{
-        console.log('no userdata redirect to login page, should not here');
-      }
-      tmp.param2.bartype = this.bartype
-      console.log(tmp);
-      this.$store.dispatch('info/loadinfo', tmp)
-        .then((r) => {
-          console.log(r);
-          this.datashowpanel = r.data
-          this.is_data_fetched =  true
-          //this.isloadequiptype = true
-          //r= r.data
-          //console.log(this.equiptypemo);
-          //NProgress.done()
-        })
-    },
-    loadsumallequipt(){
-      var em = this.equiptypemo.map(e=>{
-        var oj = {
-          id:e.equiptypeID,
-          equiptype:e.equip
-        }
-        return oj
-      })
-      //console.log(em);
-      var tmp = {}
-      tmp.info = 'sumallequipt'
-      tmp.param1 = em
-      this.$store.dispatch('info/loadinfo', tmp)
-        .then((r) => {
-          console.log(r);
-          r = r.data
-          this.allequipt = 0
-          this.equiptypemo = this.equiptypemo.map(e=>{
-            var oj = {}
-            oj.equip = e.equip
-            oj.equiptypeID = e.equiptypeID
-            oj.avatar = e.avatar
-            oj.meid = e.meid
-            oj.sum = r[0][`e${oj.equiptypeID}`]
-            this.allequipt+=oj.sum
-            return oj
-          })
-          //this.isloadequiptype = true
-          //r= r.data
-          //console.log(this.equiptypemo);
-          //NProgress.done()
-        })
-    },
-    getuserclick(){
-      if(typeof getUserclick() !== 'undefined'){
-        var tmp = JSON.parse(getUserclick())
-        if(typeof JSON.parse(getUserclick()).dashscheme !== 'undefined'){
-          this.bartype = tmp.dashscheme.bartype
-          this.seldatetype = tmp.dashscheme.seldatetype
-        }
-      }
-    },
-    querygraph(){
-      if(typeof JSON.parse(getUserData()).depart !=='undefined' ){
-        this.depart = JSON.parse(getUserData()).depart
-        var tmp = {
-          info: 'datagraph',
-          param1: {}
-        }
-        if(typeof JSON.parse(getUserclick()).dashscheme !=='undefined' ){
-          tmp.param1.bartype = JSON.parse(getUserclick()).dashscheme.bartype
-        }else{
-          tmp.param1.bartype = 'week'
-        }
-        tmp.param1.depart = this.depart
-        this.$store.dispatch('info/loadinfo', tmp)
-          .then((r) => {
-            console.log(r);
-          })
-      }else{
-        console.log('no userdata redirect to login page, should not here');
-      }
-    },
-    queryfirstvalue(){
-      this.getuserclick()
-      this.loadavatarequipt()
-      this.loadsumallequipt()
-      this.loadsumalljob()
-      this.loaduserdata()
-
-      this.querygraph()
-    }
-  }
-}
 </script>
 
-<style lang="scss">
-.text {
-    font-size: 20px;
+<style lang="scss" >
+@import url('https://fonts.googleapis.com/css?family=Kanit');
+
+html, body {
+  font-family: 'Kanit', sans-serif;
 }
-.custom-icon {
-   font-size: 1.5rem;
+#app {
+  font-family: 'Kanit', sans-serif !important;
+}
+body{
+
+  background-color: #f0f2f5;
+}
+.box-img-banner img{
+  width: 100%;
+}
+.box-img-banner{
+  padding: 0 !important;
+}
+.user-avatar {
+  width: 45px;
+  height: 45px;
+}
+.text {
+    font-size: 17px;
 }
 .big_font{
   font-size: 28px;
   font-weight: bold;
   padding-left: 20px;
 }
-
+.qrdia .el-dialog.is-fullscreen {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 98%;
+    //overflow: hidden;???
+}
 .topic1{
   font-size: 43px;
   float: right;
@@ -372,14 +53,13 @@ export default {
 }
 .topic{
   font-size: 24px;
-  float: right;
   font-weight: bold;
 }
 
 .suptopic{
-  font-size: 22px;
-  float: right;
-  color: orange
+  font-size: 14px;
+  padding-top: 4px;
+  color: #949494;
 }
 .boxtopic{
 
@@ -396,6 +76,21 @@ export default {
 }
 .box-card {
   width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.box-card-nav{
+  border-radius: 4px;
+  border: 1px solid #e6ebf5;
+  background-color: #fff;
+  overflow: hidden;
+  color: #626b7d;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+  padding: 6px;
+  font-size: 13px;
+
 }
 .previewfull{
   margin-right: 7px;
@@ -405,6 +100,7 @@ export default {
   padding-bottom: 5px;
 }
 .suitbox{
+  margin: auto;
   padding-top: 0px;
   padding-right: 15px;
 }
@@ -433,15 +129,15 @@ export default {
   border-radius: 3px;
   transition: all 0.6s;
 }
-.dashboard-editor-container-ff {
-  .v-slide-group__next, .v-slide-group__prev{
-    display: none !important;
-  }
-  width: 1300px;
-  margin: auto;
+.el-dialog{
+  width: 700px !important;
+}
+.dashboard-editor-container {
   padding: 0px;
-  background-color: #737AB9;
+  background-color: rgb(240, 242, 245);
   position: relative;
+  margin: auto;
+  width: 720px;
 
   .github-corner {
     position: absolute;
@@ -457,6 +153,47 @@ export default {
   }
 }
 @media (max-width:768px) {
+  .el-input-number.is-controls-right .el-input__inner .el-input-number--large .el-input {
+
+    padding-left: 15px !important;
+    padding-right: 50px!important;
+    padding-bottom: 10px !important;
+    padding-top: 5px !important;
+  }
+  .el-dialog__title{
+    font-size: 16px;
+  }
+  .el-dialog{
+    margin-top: 1vh !important;
+    width: 97% !important;
+  }
+  .el-input{
+    font-size: 38px !important;
+  }
+  .listtext{
+    font-size: 14px;
+  }
+  .el-message-box {
+    width:100% !important;
+  }
+  .el-input__inner {
+    height: 64px;
+  }
+  .nofull .el-dialog{
+    margin-top: 30vh !important;
+  }
+  .nofull .el-dialog__body {
+    background-color: #f0f2f5 !important;
+    padding: 0px 0px 2px !important;
+    overflow: auto;
+    height: auto !important;
+  }
+  .el-dialog__body{
+    background-color: #f0f2f5 !important;
+    padding: 0px 0px 2px !important;
+    overflow: auto;
+    height: 90vh;
+  }
   .big_font{
     font-size: 24px;
     font-weight: bold;
@@ -466,7 +203,6 @@ export default {
       font-size: 15px;
   }
   .previewfull{
-
     margin-right: 7px;
     width: 35px;
   }
@@ -477,30 +213,30 @@ export default {
     padding-right: 6px;
   }
   .topic{
-    font-size: 17px;
-    float: right;
+    font-size: 21px;
     font-weight: bold;
   }
-
-  .suptopic{
-    font-size: 14px;
-    float: right;
-    color: orange
+  .topicdepart{
+    font-size: 20px;
+    font-weight: bold;
+    color:#9c27b0
   }
-  .dashboard-editor-container-ff{
-
-    .v-slide-group__next, .v-slide-group__prev{
-      display: none !important;
-    }
-    width: 100%;
-    padding: 0px;
-    background-color: rgb(240, 242, 245);
+  .dashboard-editor-container{
+    padding: 3px;
+    background-color: #f0f2f5;
     position: relative;
+    width: 98%;
     .github-corner {
       position: absolute;
       top: 0px;
       border: 0;
       right: 0;
+    }
+
+    .chart-wrapper {
+      background: #fff;
+      padding: 16px 16px 0;
+      margin-bottom: 32px;
     }
   }
   .suitbox{
@@ -508,9 +244,5 @@ export default {
     padding-right: 0px;
   }
 }
-@media (max-width:1024px) {
-  .chart-wrapper {
-    padding: 8px;
-  }
-}
+
 </style>

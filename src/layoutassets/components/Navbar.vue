@@ -1,38 +1,56 @@
 <template>
-  <div class="navbaras">
-    <!-- <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
-    <div class="topmenuas">
-      <i class="el-icon-tickets custom-icon" />
-      ระบบจัดการทรัพย์สิน
-    </div>
+  <div class="navbardevice">
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <el-row :gutter="10" type="flex" justify="space-between" class="vercenter">
+      <el-col :xs="8" :sm="6" :md="4" class="hidden-xs-only">
+        ระบบจัดการสินทรัพย์
+      </el-col>
+       <el-col :xs="12" :sm="12" :md="4">
+        <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+      </el-col>
 
-    <div class="right-menu">
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
+      <el-col :xs="5" :sm="5" :md="5" :lg="3" :xl="1">
+        <div class="right-menu">
+          <!--<template v-if="device!=='mobile'">
+            <search id="header-search" class="right-menu-item" />
 
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <router-link to="/timeline/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
-          </router-link>
-          <router-link to="/">
-            <el-dropdown-item>หน้าหลัก</el-dropdown-item>
-          </router-link>
-          <!--<a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>-->
-          <el-dropdown-item>
-            <span style="display:block;" @click="centerDialogVisible=true">Scheme</span>
-          </el-dropdown-item>
+            <error-log class="errLog-container right-menu-item hover-effect" />
 
-          <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
+            <screenfull id="screenfull" class="right-menu-item hover-effect" />
+
+            <el-tooltip content="Global Size" effect="dark" placement="bottom">
+              <size-select id="size-select" class="right-menu-item hover-effect" />
+            </el-tooltip>
+
+          </template>-->
+          <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+            <div class="avatar-wrapper">
+
+              <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+              <i class="el-icon-caret-bottom" />
+            </div>
+            <el-dropdown-menu slot="dropdown">
+              <router-link to="/as_profile/index">
+                <el-dropdown-item>Profile</el-dropdown-item>
+              </router-link>
+              <router-link to="/">
+                <el-dropdown-item>Dashboard</el-dropdown-item>
+              </router-link>
+              <!--<a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
+                <el-dropdown-item>Github</el-dropdown-item>
+              </a>-->
+              <el-dropdown-item>
+                <span style="display:block;" @click="centerDialogVisible=true">Scheme</span>
+              </el-dropdown-item>
+
+              <el-dropdown-item divided>
+                <span style="display:block;" @click="logout">Log Out</span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          </div>
+      </el-col>
+    </el-row>
     <el-dialog
       title="เลือกโครงการที่ต้องการใช้งาน"
       :visible.sync="centerDialogVisible"
@@ -44,8 +62,6 @@
 </template>
 
 <script>
-// eslint-disable-next-line
-/* eslint-disable */
 import store from '@/store'
 import { mapGetters, mapState } from 'vuex'
 import Hamburger from '@/components/Hamburger'
@@ -131,31 +147,27 @@ export default {
 <style lang="scss">
 @media print {
   @page { size: landscape; }
-  .navbaras {
+  .navbar_as {
     display: none;
   }
   .sidebar-container{
-
     display: none;
   }
   .handle-button{
     display: none;
-
   }
 }
-.topmenuas{
-  padding-left: 10px;
-  margin-top: 15px;
-  width: 62%;
-  color: white;
+.topmenuqr{
+  margin-top: 16px;
+  width: 44%;
   display: inline-block;
-
 }
-.navbaras {
+.navbar_as {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #32367B;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
     line-height: 46px;
@@ -180,9 +192,6 @@ export default {
     display: inline-block;
     vertical-align: top;
   }
-  .custom-icon {
-   font-size: 1.2rem;
-}
 
   .right-menu {
     float: right;
@@ -198,7 +207,7 @@ export default {
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
-      color: #fff;
+      color: #5a5e66;
       vertical-align: text-bottom;
 
       &.hover-effect {

@@ -1,12 +1,10 @@
 <template>
-  <div class="dashboard-container" color="#737AB9">
+ <div class="dashboard-container">
     <component :is="currentRole" />
   </div>
 </template>
 
 <script>
-// eslint-disable-next-line
-/* eslint-disable */
 import { mapGetters } from 'vuex'
 import adminDashboard from './admin'
 import editorDashboard from './editor'
@@ -24,7 +22,6 @@ export default {
       'roles'
     ])
   },
-
   created() {
     //console.log('comhere before loop');
     console.log('created dashboard');
@@ -38,14 +35,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.dashboard-container{
- 
-}
-
-@import url('https://fonts.googleapis.com/css?family=Kanit');
-
-html, body {
-  font-family: 'Kanit', sans-serif;
-}
-</style>

@@ -5,12 +5,12 @@
   v-loading="loadingmainpage"
     element-loading-text="Loading..."
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(206, 218, 232, 0.9)"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
     style="width: 100%">
 
-    <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
-    <!-- <sidebar class="sidebar-container" /> -->
-    <div :class="{hasTagsView:needTagsView}" class="main-containerbook">
+    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <sidebar class="sidebar-container" />
+    <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+
 // eslint-disable-next-line
 /* eslint-disable */
 
@@ -201,7 +202,6 @@ export default {
   @import "~@/styles/variables.scss";
 
   .app-wrapper {
-    background: #737AB9;
     @include clearfix;
     position: relative;
     height: 100%;
@@ -212,15 +212,14 @@ export default {
       top: 0;
     }
   }
-  //@media print {
-    .main-containerbook {
-      background: #737AB9;
+  @media print {
+    .main-container {
       margin-left: 0 !important;
     }
-  //}
+  }
 
   .drawer-bg {
-    background: #737AB9;
+    background: #000;
     opacity: 0.3;
     width: 100%;
     top: 0;
@@ -240,7 +239,6 @@ export default {
 
   .hideSidebar .fixed-header {
     width: calc(100% - 54px)
-    
   }
 
   .mobile .fixed-header {
