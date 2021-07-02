@@ -3,6 +3,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'

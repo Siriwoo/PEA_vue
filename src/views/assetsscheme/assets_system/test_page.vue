@@ -1,7 +1,8 @@
 <template>
+<!-- UI คร่าวๆ สำหรับแสดง asset table-->
   <div class="app-container deviceinfocss">
-    <div class="maintop">
-      <el-row :gutter="5">
+    <div>
+      <el-row :gutter="7">
         <el-col :xs="12" :sm="5">
           <div class="grid-content bg-purple">
             <el-dropdown @command="handleCommand" trigger="click">
@@ -9,84 +10,47 @@
                 {{curmenu}}<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-s-order" command="mshowbyequipt">รายการอุปกรณ์</el-dropdown-item>
                 <el-dropdown-item icon="el-icon-location-information" command="mshowbylocation">รายการตามสถานที่</el-dropdown-item>
-                <!--el-dropdown-item icon="el-icon-date" command="mshowbyhistory">ทะเบียนประวัติ</el-dropdown-item-->
-                <el-dropdown-item icon="el-icon-upload" command="mshowupload">อัพโหลดอุปกรณ์</el-dropdown-item>
-
+                <el-dropdown-item icon="el-icon-date" command="mshowbyequipt">รายการตามปีที่ได้รับอุปกรณ์</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
-          <div class="" v-if="showbyhistory">
-            <div class="">
-              <el-select v-model="seltypehistory" filterable placeholder="Select">
-                <el-option
-                  v-for="item in optionst"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </div>
-            <div class="buttun_text hidden-xs-only" >
-              ประเภทประวัติ
-            </div>
-          </div>
         </el-col>
-        <el-col :xs="12" :sm="6" v-if="showbyequipt||showbylocation||showbyhistory">
+
+        <el-col :xs="12" :sm="6" v-if="showbyequipt||showbylocation">
           <div class="grid-content bg-purple">
-            <div class="" v-if="showbyequipt||showbyhistory">
+            <div class="" v-if="showbyequipt">
               <el-select v-model="seltype"  filterable placeholder="Select">
                 <el-option
-                  v-for="item in equiptoptions"
+                  v-for="item in yearoptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
                 </el-option>
               </el-select>
               <div class="buttun_text hidden-xs-only" >
-                ประเภทอุปกรณ์
+                 ปีที่ได้รับอุปกรณ์
               </div>
             </div>
-            <div class="" v-if="showbylocation||showbyhistory">
-              <el-select v-model="sellocation" filterable placeholder="Select" class="wraplocat">
+            <div class="" v-if="showbylocation">
+              <el-select v-model="selcenter" filterable placeholder="Select" class="wraplocat">
                 <el-option
-                  v-for="item in locationoptions"
+                  v-for="item in centeroptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
                 </el-option>
               </el-select>
               <div class="buttun_text hidden-xs-only">
-                สถานที่
+               พื้นที่ศูนย์ต้นทุน
               </div>
             </div>
           </div>
         </el-col>
-        <el-col :xs="20" :sm="6" class="suitemo" v-if="showbyhistory">
-          <div class="">
-            <div class="mb-1 buttun_text">
-              <el-date-picker
-                v-model="sstart"
-                type="date"
-                placeholder="วันที่เริ่มต้น">
-              </el-date-picker>
-              <div class="buttun_text">
-                วันที่เริ่มต้น
-              </div>
-              <el-date-picker
-                v-model="send"
-                type="date"
-                placeholder="วันที่สิ้นสุด">
-              </el-date-picker>
-              <div class="buttun_text">
-                วันที่สิ้นสุด
-              </div>
-            </div>
 
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="10" v-if="showbyequipt||showbylocation||showbyhistory">
+<v-spacer></v-spacer>
+
+        <el-col :xs="24" :sm="10" v-if="showbyequipt||showbylocation">
           <div class="grid-content bg-purple">
             <el-input
               placeholder="ค้นหา keyword"
@@ -97,18 +61,11 @@
             </el-input>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="15" v-if="showbyequipt||showbylocation||showbyhistory">
-          <div class="grid-content bg-purple">
-            <el-radio v-model="checksearch" label="or" @keyup.enter.native="searchall">หรือ</el-radio>
-            <el-radio v-model="checksearch" label="and" @keyup.enter.native="searchall">และ</el-radio>
-            <el-radio v-model="checksearch" label="not" @keyup.enter.native="searchall">ไม่เท่ากับ</el-radio>
-            <el-button @click="searchall">Search</el-button>
-            <el-button icon="el-icon-download" @click="JSONToCSVConvertor">Export ผลลัพธ์ {{tableData.length}} รายการ</el-button>
-          </div>
-        </el-col>
-        <el-col :xs="24" :sm="24" v-if="showbyequipt||showbylocation||showbyhistory">
-          <div class="grid-content bg-purple-light">
-            <el-button type="primary" round size="small" @click="showcheckbar=!showcheckbar">>>></el-button>
+        <el-button @click="searchall">Search</el-button>
+      </el-row>
+
+                <div class="grid-content bg-purple-light">
+            <el-button type="primary" round size="small" @click="showcheckbar=!showcheckbar">more ▼</el-button></el-button>
             <div class="" v-if="showcheckbar">
               <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">แสดงทั้งหมด</el-checkbox>
               <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
@@ -116,56 +73,19 @@
               </el-checkbox-group>
             </div>
           </div>
-        </el-col>
-        <el-col :xs="4" :sm="24" v-if="showupload">
-          <div class="grid-content bg-purple-light">
-            <form class="" enctype="multipart/form-data">
-              <label for="file">Upload file</label>
-              <input type="file" @change="processFile()" ref="file">
-              <el-button @click="uploadfile">upload file</el-button>
-            </form>
-          </div>
-        </el-col>
-      </el-row>
+
     </div>
-    <data-table :get-data="getData"
+    <div>
+        <data-table :get-data="getData"
               ref="table"
               :columns="columns">
-
       <div slot="Operations" slot-scope="{row}">
         <div class="operation-style">
           <el-button type="primary" plain size="mini" @click="clickfield(row.ที่-1,tableData,'history')">ข้อมูล/ประวัติ</el-button>
         </div>
       </div>
     </data-table>
-  <el-dialog
-    :title="dialogtitle"
-    :visible.sync="dialogthispage"
-    width="50%">
-    <div class="" v-if="servererror" v-for="(elem,index) in dialogmessage" >
-      {{index+1}}) {{elem}}
     </div>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="dialogthispage = false">OK</el-button>
-    </span>
-  </el-dialog>
-  <el-dialog
-    :title="dialogarkmerge_title"
-    :visible.sync="dialogarkmerge"
-    width="50%">
-      <div class="" v-for="(e,index) in dupcompare">
-        <h4>{{e.title}}</h4>
-        <div class="" v-if="e.status=='match'">
-          <div v-for="(value, propertyName) in e.message" class="mb-1">
-            <el-button size="mini" round type="success" :disabled="dupcompare[index].message[propertyName].status=='ok'" @click="updateinfoequipt(propertyName,e,index)">Update</el-button> {{ propertyName }}: {{ value.old }} => {{ value.new }}
-          </div>
-        </div>
-        <div class="" v-else>
-          {{e.message}}
-        </div>
-        <hr>
-      </div>
-  </el-dialog>
   </div>
 </template>
 <style lang="scss">
@@ -288,6 +208,7 @@ export default {
       'locations',
       'equiptype',
       'loadingmainpage',
+      'centers'
     ])
   },
   directives: { waves },
@@ -326,11 +247,11 @@ export default {
       checksearch: 'or',
       forsearchdevice: '',
       checkAll: false,
-      checkedCities: [],
+      checkedCities: [], // แก้ไขไม่ต้องมีอันนี้เพราะไม่ได้ใช้ check box
       isIndeterminate: true,
       seltypehistory:'',
       selsadd: '',
-      sellocation: '',
+      selcenter: '',
       options: [{
           value: 'Option1',
           label: 'Option1'
@@ -339,12 +260,12 @@ export default {
           value: 'Option1',
           label: 'Option1'
         }],
-      locationoptions: [{
+      centeroptions: [{
           value: 'Option1',
           label: 'Option1'
         }],
       allkey: [],
-      dallkey: ['ExcelID','อุปกรณ์','ยี่ห้อ','รุ่น','สถานที่'],
+      dallkey: ['สินทรัพย์','เลขที่สินค้าคงคลัง','อุปกรณ์','CAP_DATE','สถานที่'],
       dialogthispage: false,
       dialogtitle: '',
       servererror: false,
@@ -358,60 +279,31 @@ export default {
     }
   },
   watch: {
-    seltypehistory(v){
-      console.log(v);
-      //this.loadallequipttype()
-      if(v!==''){
-        if(typeof getUserclick() !== 'undefined'){
-          if(typeof JSON.parse(getUserclick()).equiptohis !== 'undefined'){
-            var tmp = JSON.parse(getUserclick())
-            tmp.equiptohis = v
-            setUserclick(tmp)
-            //console.log(JSON.parse(getUserclick()));
-          }
-        }
-        this.selsadd =  ''
-        this.tableData = []
-        if(v==='ข้อมูล'){
-          //this.typepage = 'ค้นหา'
-          this.typepage = 'เพิ่ม'
-          this.fillinputform(this.focusequit)
-        }else {
-          //this.typepage = 'เพิ่ม'
-          this.fillinputform(this.focusequit)
-          this.typepage='ค้นหา'
-          this.entersearch()
-        }
-
-        //this.reoptionnameform(v)
-        console.log('watch seltype');
-      }
-      //console.log('istohere');
-    },
     loadingmainpage(v){
       //console.log(v);
       if(!v){
         this.queryfirstvalue()
       }
     },
-    sellocation(v){
+    selcenter(v){
       console.log(v);
       var tmp = {}
-      tmp.sellocation = v
+      tmp.selcenter = v
       console.log(JSON.parse(getUserclick()));
       if(typeof getUserclick() !== 'undefined'){
         if(typeof JSON.parse(getUserclick()) !== 'undefined'){
           tmp = JSON.parse(getUserclick())
-          tmp.sellocation = v
+          tmp.selcenter = v
           //console.log(JSON.parse(getUserclick()));
         }
+        console.log(tmp.selcenter);
       }
       setUserclick(tmp)
       var tmp2 = {}
-      tmp2.topic = 'thatlocation'
+      tmp2.topic = 'thatcenter'
       tmp2.info = v
-      this.loadethatinfo(tmp2,'watch>sellocation')
-      console.log(this.sellocation);
+      this.loadethatinfo(tmp2,'watch>selcenter')
+      console.log(this.selcenter);
     },
     seltype(v){
       console.log('++seltype++');
@@ -427,15 +319,6 @@ export default {
         }
       }
       setUserclick(tmp)
-      //console.log(JSON.parse(getUserclick()))
-      //console.log('vvv');
-      //console.log(this.options);
-      /*var x = this.options.find(function(element) {
-        console.log(element);//
-        console.log(v);
-        return element.value == v;
-      });*/
-      //console.log(x);
       var tmp2 = {}
       tmp2.topic = 'thatquipt'
       tmp2.info = v
@@ -589,14 +472,14 @@ export default {
       console.log('++queryfirstvalue++');
       var thatquiptorlocation = 'thatquipt'
       var seltype = 'เลือกอะไรสักอย่าง'
-      var sellocation = 'เลือกอะไรสักอย่าง'
+      var selcenter = 'เลือกอะไรสักอย่าง'
 
       if(typeof getUserclick() !== 'undefined'){
         if(this.isJson(getUserclick())){
           //console.log('before error');
           //console.log(getUserclick());
-          if(typeof JSON.parse(getUserclick()).sellocation !== 'undefined'){
-            sellocation = JSON.parse(getUserclick()).sellocation
+          if(typeof JSON.parse(getUserclick()).selcenter !== 'undefined'){
+            selcenter = JSON.parse(getUserclick()).selcenter
           }
           if(typeof JSON.parse(getUserclick()).forsearchdevice !== 'undefined'){
             this.forsearchdevice = JSON.parse(getUserclick()).forsearchdevice
@@ -621,7 +504,8 @@ export default {
             if(thatquiptorlocation == 'mshowbyequipt'){
               this.seltype = seltype
             }else{
-              this.sellocation = sellocation
+              this.selcenter = selcenter
+              console.log(selcenter);
             }
             this.dodropdownview(thatquiptorlocation)
           }else {
@@ -637,22 +521,38 @@ export default {
       console.log('++queryfirstvalue++');
     },
     loadlocations(){
-
-      //console.log(seltype);
       var tmp2 = {}
-      tmp2.topic = 'thatlocation'
-      tmp2.info = this.sellocation
+      tmp2.topic = 'thatcenter'
+      tmp2.info = this.selcenter
       this.loadethatinfo(tmp2,'loadlocations')
-      var r= this.locations
+      var r= this.centers
       //console.log(r);
       var rr = r.map(obj =>{
          var rObj = {};
-         rObj.value = obj.ID;
-         rObj.label = `${obj.TypeOffice}.${obj.Name1}`;
+         rObj.value = obj.COST_CENTER_ID;
+         rObj.label = `${obj.BUS_NAME} ${obj.COST_CENTER}`;
          return rObj;
       });
-      this.locationoptions = rr
+      this.centeroptions = rr
+      if(this.isJson(getUserclick())){
+        if(typeof JSON.parse(getUserclick()).selcol === 'undefined'){
+          console.log("selcol === 'undefined'");
+          var tmp = JSON.parse(getUserclick())
+
+          tmp.selcol = this.centeroptions
+          /*tmp.viewinfo = {
+            listequipt:{
+              nowsel:
+            }
+          }*/
+          setUserclick(tmp)
+          console.log(JSON.parse(getUserclick()));
+        }else{
+          var selcenter = 'เลือกอะไรสักอย่าง'
+        }
+      }
     },
+
     loadequipt(){
       console.log('++loadequipt++');
       console.log(this.seltype);
@@ -672,7 +572,7 @@ export default {
       });
       this.equiptoptions = rr
       //console.log('77777');
-      //console.log(this.locationoptions)
+      //console.log(this.centeroptions)
       //console.log(JSON.parse(getUserclick()));
       //console.log(this.options);
       if(this.isJson(getUserclick())){
@@ -695,12 +595,13 @@ export default {
       console.log('++loadequipt++');
     },
    loadethatinfo(v,comefrom){
-       console.log("++loadethatinfo++");
+       //console.log("++loadethatinfo++");
        var tmp = {}
        tmp.info = v.topic
-       tmp.param1 = this.full_default_depart().title
+       tmp.param1 = v.info
        tmp.param2 = v.info
-       //console.log(tmp);
+       //console.log(tmp.param1);
+       //console.log();
        const loading = this.$loading({
          lock: true,
          text: 'Loading',
@@ -710,28 +611,32 @@ export default {
 
        this.$store.dispatch('info/loadinfo', tmp)
          .then((r) => {
-           console.log(v);
+           //console.log(v);
            console.log('loadthatinfo comefrom : '+ comefrom);
+           //console.log(r);
+           loading.close();
+           r = r.data
            console.log(r);
            console.log(r.data);
-           loading.close();
-           r= r.data
            if(r.length>0){
-             var mrk = Object.keys(JSON.parse(r[0].infodetail))
-             var t = r.map(o=>{
-
-               //console.log(no);
-               return this.infoequipt_adapter(o)
+             var mrk = Object.keys(JSON.parse(r[0]['สินทรัพย์']))
+             // เพราะ map infoequipt_adapter เลย select หัวตาราไงไม่ได้ ต้องแก้ไขตรงนั้นก่อน แล้วเชื่อมไปแมพใหม่
+             var t = r.map(ob=>{
+               console.log(ob);
+               return this.infoasset_adapter(ob)
 
              })
              this.tableData = t
              this.ortableData = t
+            console.log(this.tableData);
+             console.log(this.ortableData);
              this.reindex()
              if(typeof JSON.parse(getUserclick()).forsearchdevice !== 'undefined'){
                this.forsearchdevice = JSON.parse(getUserclick()).forsearchdevice
                this.searchall()
              }
-             //console.log(this.tableData);
+             console.log(t);
+
            }else{
              var mrk = []
              this.tableData = []
@@ -740,17 +645,19 @@ export default {
            }
            if(v.topic==='thatquipt'){
 
-           }else if (v.topic==='thatlocation') {
+           }else if (v.topic==='thatcenter') {
              var mrk = []
+             console.log(mrk);
            }
+           this.selthiscol()
 
            this.allkey = this.dallkey.concat(mrk)
-           //console.log(this.allkey);
+           console.log(this.allkey);
            if(this.isJson(getUserclick())){
              var tmp = JSON.parse(getUserclick())
              //
              if(this.showbyequipt){
-               console.log('--showbyequipt--');
+               //console.log('--showbyequipt--');
                if(typeof JSON.parse(getUserclick()).selcol !== 'undefined'){
                  //console.log('+++');
                  //console.log(tmp.selcol);
@@ -758,7 +665,7 @@ export default {
                  var found = tmp.selcol.find(function(element) {
                    return element.value === v.info;
                  });
-                //  console.log('5555');
+                 //console.log('5555');
                 //  console.log(v.info);
                 //  console.log(tmp);
                 //  console.log(found);
@@ -768,35 +675,34 @@ export default {
                      this.checkedCities = found.selthis
                    }else{
                      this.checkedCities = this.allkey
-                     console.log(this.allke);
+                     //console.log('fak');
                    }
                  }else{
                    this.checkedCities = this.allkey
                    this.savetoselcol(v.info,this.allkey)
-                   //console.log('fak');
+                   console.log('2A console'+v.info);
 
                  }
-                 //console.log(this.checkedCities);
+                 console.log(this.checkedCities);
 
                }
              }else if (this.showbylocation) {
                console.log('--showbylocation--');
-               if(typeof JSON.parse(getUserclick()).selloccol !== 'undefined'){
+               if(typeof JSON.parse(getUserclick()).sellocenter !== 'undefined'){
                  console.log('+++++');
                  console.log(JSON.parse(getUserclick()));
-                 this.checkedCities = tmp.selloccol
-                 console.log(tmp.selloccol);
+                 this.checkedCities = tmp.sellocenter
+                 console.log(tmp.sellocenter);
 
                }else{
                  this.checkedCities = this.allkey
 
-                //  console.log('fak');
+                 //console.log('fak');
                 //  this.selthiscol(v.info)
-                //  console.log(selthiscol);
+                //  console.log(selthiscol(v.info));
                }
              }
              this.selthiscol()
-
            }
 
            //console.log(this.allkey);
@@ -820,7 +726,7 @@ export default {
    savetoselcol(value,selthis){
      console.log('++savetoselcol++');
      console.log(value)
-     console.log(this.equiptoptions);
+     //console.log(this.equiptoptions);
      var l = this.equiptoptions.find(e=>e.value==value)
      console.log(l);
      var s = JSON.parse(getUserclick())
@@ -871,12 +777,12 @@ export default {
       }
       //console.log(this.checksearch);
       this.forsearchdevice = this.forsearchdevice.toUpperCase()
-      /*console.log('this.forsearchdevice');
-      console.log(this.forsearchdevice);
-      console.log('this.forsearchdevice');*/
+      // console.log('this.forsearchdevice');
+       console.log(this.forsearchdevice);
+      // console.log('this.forsearchdevice');
 
       var st = this.forsearchdevice.split(' ')
-      //console.log(st);
+      // console.log(st);
       var rx = ''
       for (var i = 0; i < st.length; i++) {
         rx+=st[i]
@@ -886,7 +792,8 @@ export default {
       }
       var re = new RegExp(rx, "g");
 
-      //console.log(re);
+      // console.log(re);
+      // console.log(Promise);
       return new Promise((resolve, reject) => {
         try {
           console.log(c);
@@ -894,9 +801,7 @@ export default {
           this.tableData = this.ortableData.filter(e=>{
             var astext = JSON.stringify(e)
             var astext = astext.toUpperCase()
-            //console.log(astext);
-            var matches = astext.match(re);
-
+            console.log('A2 --> ' + astext);
             if(matches!=null){
               matches = [...new Set(matches)];
               //console.log(matches);
@@ -905,30 +810,16 @@ export default {
                 if(matches.length>0){
                   return e
                 }
-              }else if (this.checksearch=='and') {
-                if(matches.length===st.length){
-                  return e
-                }
-              }
-            }else {
-              if (this.checksearch=='not') {
-                return e
               }
             }
-
-
+            
           });
           console.log('Get data table!!!');
           console.log(this.ortableData);
           console.log(this.tableData);
           //getonly that page
           this.reindex()
-          /*console.log(this.tableData);
-          this.tableData = this.tableData.filter(e=>{
-            return ((e.ที่ <= c.page*30)&&(e.ที่ >= ((c.page-1)*10)+1))
-          })
-          console.log(this.tableData);
-          this.reindex()*/
+
           resolve(this.tableData)
         } catch (e) {
           console.log(e);
@@ -936,6 +827,7 @@ export default {
         }
 
       })
+      
     },
     reindex(){
       for (var i = 0; i < this.tableData.length; i++) {
@@ -969,7 +861,7 @@ export default {
         this.showbyequipt = true
         this.searchall()
         this.loadequipt()
-        this.curmenu = 'รายการอุปกรณ์'
+        this.curmenu = 'รายการตามปีที่ได้รับอุปกรณ์'
       }
       else if(c=="mshowbylocation"){
         this.showview = true
@@ -977,10 +869,6 @@ export default {
         this.curmenu = 'รายการตามสถานที่'
         this.searchall()
         this.loadlocations()
-      }
-      else if(c=="mshowbyhistory"){
-        this.showbyhistory = true
-        this.curmenu = 'ทะเบียนประวัติ'
       }
       //console.log(JSON.parse(getUserclick()));
       if(typeof getUserclick() !== 'undefined'){
@@ -1011,18 +899,18 @@ export default {
        console.log('++selthiscol++');
        console.log('deviceinfo.vue : step2');
        console.log(this.checkedCities);
-       if(this.checkedCities[0]!=="ที่"){
-         this.checkedCities.splice( 0, 0, "ที่");
-       }
-       this.columns = this.checkedCities.map(obj=>{
+      //  if(this.checkedCities[0]!=="ที่"){
+      //    this.checkedCities.splice( 0, 0, "ที่");
+      //  }
+      this.columns = this.checkedCities.map(obj=>{
          var rObj = {};
          rObj.prop = obj
          rObj.label = obj
          if(obj=='ที่'){
            rObj.width = '57'
-         }else if(obj=='ExcelID'){
+         }else if(obj=='สินทรัพย์'){
            rObj.width = '90'
-           rObj.label = 'xlsID'
+           rObj.label = 'id'
          }
          return rObj
        })
@@ -1032,28 +920,25 @@ export default {
        }
        this.columns.push(tm1)
        console.log(this.columns);
+
        if(this.isJson(getUserclick())){
          console.log('Do save column');
          if(this.showbyequipt){
            console.log('showbyequipt');
              if(typeof JSON.parse(getUserclick()).selcol !== 'undefined'){
                this.savetoselcol(this.seltype,this.checkedCities)
-               //console.log('+++++++');
-               //console.log(JSON.parse(getUserclick()));
+
              }
          }else if (this.showbylocation) {
            console.log('showbylocation');
            //console.log('11111111111111');
-           //console.log(this.checkedCities);
+           //console.log('A2 show '+this.checkedCities);
            var tmp2 = JSON.parse(getUserclick())
-           tmp2.selloccol = this.checkedCities
+           tmp2.sellocenter = this.checkedCities
+           console.log('A2 check selcenter'+tmp2.sellocenter);
            console.log(JSON.stringify(tmp2));
            setUserclick(tmp2)
-           //console.log('333333333333');
 
-           //console.log(JSON.parse(getUserclick()));
-             //console.log('+++++++');
-             //console.log(JSON.parse(getUserclick()));
          }
        }else{
          console.log(getUserclick());
@@ -1135,3 +1020,4 @@ export default {
   }
 }
 </script>
+

@@ -21,6 +21,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { transactionList } from '@/api/remote-search'
 
 export default {

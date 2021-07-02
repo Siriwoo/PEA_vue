@@ -358,6 +358,8 @@
   }
 </style>
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import DataTable from "@/views/components/DataTable";
 import editorImage from '@/views/components/Editimage'
 import formreport from '@/views/components/formreport'

@@ -83,6 +83,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import editorImage from '@/views/components/Editimage'
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
 import waves from '@/directive/waves' // waves directive

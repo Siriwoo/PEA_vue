@@ -82,6 +82,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import CountTo from 'vue-count-to'
 
 export default {

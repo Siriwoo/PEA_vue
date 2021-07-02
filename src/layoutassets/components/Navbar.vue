@@ -3,7 +3,7 @@
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <el-row :gutter="10" type="flex" justify="space-between" class="vercenter">
       <el-col :xs="8" :sm="6" :md="4" class="hidden-xs-only">
-        ระบบจัดการสินทรัพย์
+        ระบบสำรวจสินทรัพย์
       </el-col>
        <el-col :xs="12" :sm="12" :md="4">
         <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />

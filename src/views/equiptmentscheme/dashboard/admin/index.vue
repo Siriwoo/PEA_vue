@@ -51,6 +51,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { getUserData, setUserclick, getUserclick } from '@/utils/auth'
 import GithubCorner from '@/components/GithubCorner'
 import PickSingleLine from '@/views/components/pick_singleline_avatar_and_title'
