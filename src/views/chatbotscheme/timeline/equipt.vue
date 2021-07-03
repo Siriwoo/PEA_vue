@@ -152,6 +152,8 @@
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 import pmcctv from '../pm/pmcctv.vue'

@@ -76,6 +76,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import splitPane from 'vue-splitpane'
 
 export default {

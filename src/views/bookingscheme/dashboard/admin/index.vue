@@ -43,6 +43,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import bookingsystem from './components/bookingsystem.vue'
 import bookinghistory from './components/bookinghistory.vue'
 import bookingstatistic from './components/bookingstatistic.vue'

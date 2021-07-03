@@ -164,6 +164,8 @@
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import { mapActions, mapState, mapGetters } from 'vuex'
   import axios from 'axios'
   // import store from '../vuex/store.js'

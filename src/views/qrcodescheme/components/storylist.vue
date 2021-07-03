@@ -113,6 +113,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { toggleClass } from '@/utils'
 import picon_addhis from "@/assets/qrscheme/addhis.png"
 import picon_decresehis from "@/assets/qrscheme/decresehis.png"

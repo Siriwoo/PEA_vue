@@ -57,6 +57,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { fetchList } from '@/api/article'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 

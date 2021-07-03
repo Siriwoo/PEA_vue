@@ -35,6 +35,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 export default {
   name: "DataTable",
   inheritAttrs: false,
@@ -76,7 +78,7 @@ export default {
           page: reqPage,
           sortParams: this.sortParams
         });
-        console.log(response);
+        //console.log(response);
         if(typeof response !== 'undefined'){
           this.tableData = response;
           this.total = response.length;

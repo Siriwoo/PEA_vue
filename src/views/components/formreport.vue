@@ -297,6 +297,7 @@
   </div>
   </div>
 </template>
+
 <style lang="scss">
 .formreportcss{
   .el-input.is-disabled .el-input__inner{
@@ -463,6 +464,8 @@
   }
 </style>
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import {freqmethods} from '@/mixins/freqmethods'
 import editorImage from '@/views/components/Editimage'
 import { mapGetters } from 'vuex'

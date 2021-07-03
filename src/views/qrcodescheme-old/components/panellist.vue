@@ -111,6 +111,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { toggleClass } from '@/utils'
 import { getUserData,
   setUserclick,

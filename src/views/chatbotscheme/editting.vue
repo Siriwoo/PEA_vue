@@ -226,6 +226,8 @@
 
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import dAns from './d_ans.vue'
   import { mapState, mapActions, mapGetters } from 'vuex'
   import axios from 'axios'

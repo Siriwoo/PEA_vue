@@ -41,6 +41,8 @@ a {
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import { mapGetters, mapActions } from 'vuex'
   export default{
     data () {

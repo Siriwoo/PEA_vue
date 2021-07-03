@@ -52,6 +52,8 @@
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import { mapActions, mapGetters } from 'vuex'
 
   // import store from '../vuex/store.js'

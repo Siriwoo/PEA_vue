@@ -167,6 +167,8 @@ a {
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import { mapGetters, mapActions, mapState } from 'vuex'
   import dQna from './d_qna.vue'
   import dAns from './d_ans.vue'

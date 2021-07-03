@@ -144,6 +144,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 const avatarPrefix = '?imageView2/1/w/80/h/80'
 const carouselPrefix = '?imageView2/2/h/440'
 import Storylist from '@/views/qrcodescheme/components/storylist'

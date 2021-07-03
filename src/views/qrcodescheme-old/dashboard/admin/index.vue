@@ -140,6 +140,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import Listallequipt from '@/views/qrcodescheme/components/listallequipt'
 import Mainmenuqr from '@/views/qrcodescheme/components/mainmenu'
 import Qractivity from '@/views/qrcodescheme/components/qractivity'

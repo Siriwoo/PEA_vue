@@ -5,6 +5,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { mapGetters } from 'vuex'
 import adminDashboard from './admin'
 import editorDashboard from './editor'

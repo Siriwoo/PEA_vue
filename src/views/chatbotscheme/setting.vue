@@ -219,6 +219,8 @@
 
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import dTags from './getwanttags.vue'
   import { mapState, mapActions, mapGetters } from 'vuex'
   import axios from 'axios'

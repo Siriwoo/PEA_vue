@@ -109,6 +109,8 @@
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import { mapActions, mapGetters, mapState } from 'vuex'
   export default{
     data () {

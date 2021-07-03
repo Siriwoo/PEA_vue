@@ -54,6 +54,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { fetchList } from '@/api/article'
 
 export default {

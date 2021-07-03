@@ -211,6 +211,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { toggleClass } from '@/utils'
 import '@/assets/custom-theme/index.css' // the theme changed version element-ui css
 import Selectdest from '@/views/qrcodescheme/components/select'

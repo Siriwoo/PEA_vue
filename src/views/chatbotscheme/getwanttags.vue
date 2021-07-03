@@ -84,6 +84,8 @@
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import { mapActions, mapState } from 'vuex'
   export default{
     data () {

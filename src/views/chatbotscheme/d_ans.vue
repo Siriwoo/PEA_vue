@@ -188,6 +188,8 @@
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import editorImage from '@/views/components/Editimage'
 import { mapActions, mapGetters } from 'vuex'
 import store from '@/store'

@@ -6,6 +6,8 @@
   </div>
 </template>
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import Kanban from '@/components/Kanban'
 
 export default {

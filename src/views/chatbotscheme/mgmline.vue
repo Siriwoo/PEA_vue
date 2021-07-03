@@ -105,6 +105,8 @@ a {
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import axios from 'axios'
 import { mapActions, mapState, mapGetters } from 'vuex'
 import qna from './qna.vue'

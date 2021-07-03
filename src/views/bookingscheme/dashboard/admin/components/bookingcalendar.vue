@@ -135,6 +135,8 @@ a {
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import { mapGetters, mapActions, mapState } from 'vuex'
   import axios from 'axios'
   import fullscreen from 'vue-fullscreen'

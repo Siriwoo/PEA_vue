@@ -24,6 +24,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { mapGetters } from 'vuex'
 import { getUserActivity,getUserData } from '@/utils/auth'
 export default {

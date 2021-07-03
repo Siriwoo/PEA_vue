@@ -133,6 +133,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import { toggleClass } from '@/utils'
 import avatar from "@/assets/toppup/avatar.png"
 import '@/assets/custom-theme/index.css' // the theme changed version element-ui css

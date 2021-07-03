@@ -65,6 +65,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import clip from '@/utils/clipboard' // use clipboard directly
 import clipboard from '@/directive/clipboard/index.js' // use clipboard by v-directive
 import axios from 'axios'

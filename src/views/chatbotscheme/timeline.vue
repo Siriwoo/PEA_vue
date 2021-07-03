@@ -69,6 +69,8 @@ a {
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
 import {mapGetters} from 'vuex'
 import profile from './timeline/profile.vue'
 import history from './timeline/history.vue'

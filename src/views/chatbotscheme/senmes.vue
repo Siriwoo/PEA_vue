@@ -127,6 +127,8 @@
 </style>
 
 <script>
+// eslint-disable-next-line
+/* eslint-disable */
   import axios from 'axios'
   import { mapActions, mapGetters,mapState } from 'vuex'
   export default{
